@@ -1,5 +1,6 @@
 function updateText(newText) {
     var textboxElement = document.getElementById('textbox');
+    var response = "<strong>Filename: </strong>".concat(newText)
     textboxElement.innerHTML = newText;
 }
 
