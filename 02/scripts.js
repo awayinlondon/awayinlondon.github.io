@@ -10,6 +10,6 @@ fileSelector.addEventListener('change', (event) => {
     console.log(fileList);
     sFilename = fileList[0].name;
     updateText(sFilename)
-    alert(fileList[0].name)
+
 });
 
