@@ -58,3 +58,10 @@ function uploadFile(file) {
     sFilename = file.name;
     updateText(sFilename)
 }
+
+dropArea.addEventListener('click', handleClick, false);
+function handleClick(e) {
+    alert('handleEvent fired');
+    console.log(e);
+    fileSelector.submit();
+}
