@@ -60,14 +60,9 @@
   #drop-area > input {
       height: 100%;
       width: 100;
-      opacity: 0;
-      display: hidden;
-      cursor: pointer;
   }
 
   #drop-area {
-      display: inline-block;
-      overflow: hidden;
       background: center center no-repeat;
       background-size: 95% 95%;
       background-image: url("dragDrop.png");
