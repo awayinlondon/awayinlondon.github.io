@@ -63,5 +63,5 @@ dropArea.addEventListener('click', handleClick, false);
 function handleClick(e) {
     alert('handleEvent fired');
     console.log(e);
-    fileSelector.dispatchEvent(new Event('input', { bubbles: true }));
+    fileSelector.click();
 }
