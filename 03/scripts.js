@@ -25,11 +25,11 @@ function preventDefaults (e) {
   }
 
 ['dragenter', 'dragover'].forEach(eventName => {
-    dropArea.addEventListener(eventName, highlight, false)
+    dropArea.addEventListener(eventName, highlight, false);
 });
 
 ['dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, unhighlight, false)
+    dropArea.addEventListener(eventName, unhighlight, false);
 });
 
 function highlight(e) {
@@ -40,7 +40,7 @@ function unhighlight(e) {
     dropArea.classList.remove('highlight')
 }
 
-dropArea.addEventListener('drop', handleDrop, false)l
+dropArea.addEventListener('drop', handleDrop, false);
 
 function handleDrop(e) {
   let dt = e.dataTransfer;
