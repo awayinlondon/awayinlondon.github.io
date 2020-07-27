@@ -59,9 +59,4 @@ function uploadFile(file) {
     updateText(sFilename)
 }
 
-dropArea.addEventListener('click', handleClick, false);
-function handleClick(e) {
-    alert('handleEvent fired');
-    console.log(e);
-    fileSelector.click();
-}
+
