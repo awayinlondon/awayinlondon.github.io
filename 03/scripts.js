@@ -55,6 +55,6 @@ function handleFiles(files) {
 
 function uploadFile(file) {
     console.log(file);
-    sFilename = fileList[0].name;
+    sFilename = file.name;
     updateText(sFilename)
 }
