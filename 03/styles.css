@@ -16,7 +16,8 @@
 #drop-area {
     border: 2px dashed #ccc;
     border-radius: 20px;
-    width: 480px;
+    height: 512px;
+    width: 512px;
     font-family: sans-serif;
     margin: 100px auto;
     padding: 20px;
@@ -60,6 +61,7 @@
       height: 100%;
       width: 100;
       opacity: 0;
+      display: hidden;
       cursor: pointer;
   }
 
@@ -67,6 +69,6 @@
       display: inline-block;
       overflow: hidden;
       background: center center no-repeat;
-      background-size: 75% 75%;
+      background-size: 95% 95%;
       background-image: url("dragDrop.png");
   }
