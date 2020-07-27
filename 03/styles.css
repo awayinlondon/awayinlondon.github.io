@@ -47,9 +47,16 @@
     border-radius: 5px;
     border: 1px solid #ccc;
   }
+  .file-selector {
+      display: none;
+  }
+  .button {
+      display: none;
+  }
   .button:hover {
     background: #ddd;
   }
+
   #fileElem {
     display: none;
   }
