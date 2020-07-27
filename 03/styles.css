@@ -55,3 +55,18 @@
   #fileElem {
     display: none;
   }
+
+  #drop-area > input {
+      height: 100%;
+      width: 100;
+      opacity: 0;
+      cursor: pointer;
+  }
+
+  #drop-area {
+      display: inline-block;
+      overflow: hidden;
+      background: center center no-repeat;
+      background-size: 75% 75%;
+      background-image: url("dragDrop.png");
+  }
