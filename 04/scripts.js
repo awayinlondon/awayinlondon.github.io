@@ -1,3 +1,8 @@
+// -----
+// zip stuff
+// -----
+
+
 function zipStuff(blob) {
     console.log('zipStuff: entering function');
     // use a BlobReader to read the zip from a Blob object
@@ -95,10 +100,3 @@ function uploadFile(file) {
     updateText(sFilename)
     zipStuff(file);
 }
-
-// -----
-// zip stuff
-// -----
-
-
-
