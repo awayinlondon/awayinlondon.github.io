@@ -2,8 +2,9 @@
 // zip stuff
 // -----
 
-function listWrap(zipEntry) {
-    console.log(`<li>${zipEntry.filename}</li>`);
+function listWrap(zipEntries) {
+    var list = `<ul>${zipEntries.map((element => {return `<li>${element.filename}</li>`}).join()}</ul>`;
+    console.log(list);
 }
 
 function zipStuff(blob) {
@@ -15,7 +16,7 @@ function zipStuff(blob) {
         reader.getEntries(function(entries) {
         if (entries.length) {
             console.log(entries);
-            entries.map(listWrap);
+            listWrap(entries);
             console.log("zipStuff: if entries.length");
             // get first entry content as text
             entries[0].getData(new zip.TextWriter(), function(text) {
