@@ -3,7 +3,7 @@
 // -----
 
 function listWrap(zipEntries) {
-    var list = `<ul>\n${zipEntries.map(element => {return `<li>${element.filename\n}</li>\n`}).join()}</ul>`;
+    var list = `<ul>\n${zipEntries.map(element => {return `<li>${element.filename}\n</li>\n`}).join()}</ul>`;
     textboxElement.innerHTML = list;
 }
 
