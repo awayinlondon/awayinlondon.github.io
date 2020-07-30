@@ -3,7 +3,7 @@
 // -----
 
 function listWrap(zipEntry) {
-    console.log(zipEntry));
+    console.log(zipEntry);
 }
 
 function zipStuff(blob) {
