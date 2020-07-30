@@ -4,7 +4,7 @@
 
 function listWrap(zipEntries) {
     var list = `<ul>\n${zipEntries.map(element => {return `<li>${element.filename}\n</li>\n`}).join('')}</ul>`;
-    var textboxElement = document.getElementById('textbox');
+    var textboxElement = document.getElementById('list');
     textboxElement.innerHTML = list;
 }
 
