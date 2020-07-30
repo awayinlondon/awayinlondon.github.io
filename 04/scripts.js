@@ -15,7 +15,7 @@ function zipStuff(blob) {
         reader.getEntries(function(entries) {
         if (entries.length) {
             console.log(entries);
-            console.log(entries.map(zipStuff));
+            entries.map(zipStuff);
             console.log("zipStuff: if entries.length");
             // get first entry content as text
             entries[0].getData(new zip.TextWriter(), function(text) {
