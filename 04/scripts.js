@@ -3,7 +3,7 @@
 // -----
 
 function listWrap(zipEntries) {
-    var list = `<ul>\n${zipEntries.map(element => {return `<li>${element.filename}\n</li>\n`}).join('')}</ul>`;
+    var list = `<ul>\n${zipEntries.map(element => {return `<li><strong>Filename: </strong>${element.filename}\n</li>\n`}).join('')}</ul>`;
     var textboxElement = document.getElementById('list');
     textboxElement.innerHTML = list;
 }
@@ -44,8 +44,8 @@ function zipStuff(blob) {
 }
 
 function updateText(newText) {
-    var textboxElement = document.getElementById('textbox');
-    var response = "<strong>Filename: </strong>".concat(newText)
+    var textboxElement = document.getElementById('list');
+    var response = `<ul><li><strong>Filename: </strong>${newText}</li></ul>`
     textboxElement.innerHTML = response;
 }
 
