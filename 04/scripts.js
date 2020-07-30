@@ -2,6 +2,11 @@
 // zip stuff
 // -----
 
+function listWrap(zipEntries) {
+    var list = `<ul>\n${zipEntries.map(element => {return `<li><strong>Filename: </strong>${element.filename}\n</li>\n`}).join('')}</ul>`;
+    var textboxElement = document.getElementById('list');
+    textboxElement.innerHTML = list;
+}
 
 function zipStuff(blob) {
     console.log('zipStuff: entering function');
@@ -12,6 +17,7 @@ function zipStuff(blob) {
         reader.getEntries(function(entries) {
         if (entries.length) {
             console.log(entries);
+            listWrap(entries);
             console.log("zipStuff: if entries.length");
             // get first entry content as text
             entries[0].getData(new zip.TextWriter(), function(text) {
@@ -38,8 +44,8 @@ function zipStuff(blob) {
 }
 
 function updateText(newText) {
-    var textboxElement = document.getElementById('textbox');
-    var response = "<strong>Filename: </strong>".concat(newText)
+    var textboxElement = document.getElementById('list');
+    var response = `<ul><li><strong>Filename: </strong>${newText}</li></ul>`
     textboxElement.innerHTML = response;
 }
 
@@ -50,7 +56,7 @@ fileSelector.addEventListener('change', (event) => {
     console.log(fileList);
     sFilename = fileList[0].name;
     updateText(sFilename)
-
+    zipStuff(fileList[0]);
 });
 
 let dropArea = document.getElementById('drop-area');
