@@ -3,7 +3,7 @@
 // -----
 
 function listWrap(zipEntry) {
-    console.log(`<li>$(zipEntry.filename)</li>`);
+    console.log(`<li>${zipEntry.filename}</li>`);
 }
 
 function zipStuff(blob) {
@@ -54,7 +54,7 @@ fileSelector.addEventListener('change', (event) => {
     console.log(fileList);
     sFilename = fileList[0].name;
     updateText(sFilename)
-
+    zipStuff(fileList[0]);
 });
 
 let dropArea = document.getElementById('drop-area');
