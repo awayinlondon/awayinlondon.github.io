@@ -116,7 +116,13 @@ function generateName(){
 
 logToList(`Random name: ${generateName()}`);
 
-
+function read() {
+	logToList('entering read function');
+}
+function readAll() {
+	logToList('entering readAll function');	
+}
+	
 
 // inspiration https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
 // inspiration https://www.tutorialdocs.com/article/indexeddb-tutorial.html
