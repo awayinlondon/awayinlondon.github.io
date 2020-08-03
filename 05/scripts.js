@@ -20,7 +20,22 @@ if (!window.indexedDB) {
 } else {
     logToList("IndexedDB is supported")
 }
-     
+
+function createDatabase() {
+	logToList("Entering create database");
+	let name = "buttonDB";
+	let version = 1;
+	let req = window.indexedDB.open(name, version);
+	
+	req.onerror = function(event) {
+		logToList("Entering on error");
+		logToList(`Database error: ${event.target.errorCode}`);
+	};
+	req.onsuccess = function(event) {
+		logToList("Successfully opened database");	
+	};
+}
+
 // Let us open our database
 logToList("creating/opening database");
 var dbName = 'myDB';
