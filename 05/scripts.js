@@ -33,7 +33,26 @@ function createDatabase() {
 	};
 	req.onsuccess = function(event) {
 		logToList("Successfully opened database");	
+		logToList("Closing database");
+		let db = req.result;
+		db.close();
 	};
+}
+
+function deleteDatabase() {
+	logToList("Entering delete database");
+	let name = "buttonDB";
+	
+	let req = indexedDB.deleteDatabase(name);
+	req.onsuccess = function () {
+		logToList("Database deleted successfully");	
+	}
+	req.onerror = function() {
+		logToList("Unable to delete database");	
+	}
+	req.onblocked = function() {
+		logToList("Unable to delete database due to the operation being blocked");	
+	}
 }
 
 // Let us open our database
