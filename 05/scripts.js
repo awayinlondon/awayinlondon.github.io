@@ -63,7 +63,7 @@ function listDatabases() {
 		r.forEach(function(element) {
 			logToList(`This may work in Chrome?: ${r}`);
 		});
-	}
+	});
 }
 
 // Let us open our database
