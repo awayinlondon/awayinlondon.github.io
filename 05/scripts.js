@@ -55,6 +55,12 @@ function deleteDatabase() {
 	}
 }
 
+function listDatabases() {
+	logToList("Entering list databases");
+	logToList("There does not appear to be a mechanism to list databases that exist")
+	indexedDB.databases().then(r => logToList(`This may work in Chrome?: ${r}`));
+}
+
 // Let us open our database
 logToList("creating/opening database");
 var dbName = 'myDB';
