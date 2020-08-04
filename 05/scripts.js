@@ -57,8 +57,13 @@ function deleteDatabase() {
 
 function listDatabases() {
 	logToList("Entering list databases");
-	logToList("There does not appear to be a mechanism to list databases that exist")
-	indexedDB.databases().then(r => logToList(`This may work in Chrome?: ${r}`));
+	logToList("There does not appear to be a mechanism to list databases that exist");
+	indexedDB.databases().then(r => {
+		console.log(r);
+		r.forEach(function(element) {
+			logToList(`This may work in Chrome?: ${r}`));
+		});
+	}
 }
 
 // Let us open our database
