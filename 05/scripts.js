@@ -87,6 +87,32 @@ function listDatabases() {
 	});
 }
 
+function add() {
+	logToList("Entering add");
+	let name = "buttonDB";
+	
+	var request = indexedDB.open(name);
+	request.onerror = function(event) {
+		logToList("Entering onerror");	
+	};
+	request.onsuccess = function(event) {
+		logToList("Entering on success");
+		let db = event.target.result;
+		var customerData = [
+			{ 'email_address': 'awayinlondon@gmail.com', 'first_name': 'away', 'last_name': 'london'},
+			{ 'email_address': 'awayinlondon@gmail.com2', 'first_name': 'away2', 'last_name': 'london2' }
+		];
+	};
+	var customerTransaction = db.transaction('customers', 'readwrite');
+	customerTransaction.onerror = function(event) {
+		logToList(`Entering customer transaction on error: ${event.target.error}`);	
+	};
+	var customerStore = customerTransaction.objectStore('customers');
+	for (var i=0; i < customerData.length; i++) {
+		customerStore.add(customerData[i]);
+	}
+};
+
 // Let us open our database
 logToList("creating/opening database");
 var dbName = 'myDB';
