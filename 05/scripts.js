@@ -35,6 +35,27 @@ function createDatabase() {
 		logToList("Successfully opened database");	
 		logToList("Closing database");
 		let db = req.result;
+		
+		db.createObjectStore("customers", { keyPath: "email_address" });
+		db.close();
+	};
+}
+
+function updateDatabase() {
+	logToList("Entering create database");
+	let name = "buttonDB";
+	let version = 2;
+	let req = window.indexedDB.open(name, version);
+	
+	req.onerror = function(event) {
+		logToList("Entering on error");
+		logToList(`Database error: ${event.target.errorCode}`);
+	};
+	req.onsuccess = function(event) {
+		logToList("Successfully opened database");	
+		logToList("Closing database");
+		let db = req.result;
+		db.createObjectStore("name", { autoIncrement: true });
 		db.close();
 	};
 }
