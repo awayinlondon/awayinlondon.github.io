@@ -61,7 +61,7 @@ function listDatabases() {
 	indexedDB.databases().then(r => {
 		console.log(r);
 		r.forEach(function(element) {
-			logToList(`This may work in Chrome?: ${r}`));
+			logToList(`This may work in Chrome?: ${r}`);
 		});
 	}
 }
