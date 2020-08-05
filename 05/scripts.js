@@ -1,6 +1,11 @@
 "use strict";
 
+const DBNAME = 'test_db';
+
+
 console.log("Entering, and exiting!, a template scripts.js file");
+
+
 
 function createList() {
     var element = document.getElementById('textbox');
@@ -15,6 +20,15 @@ function logToList(text) {
 
 createList();
 
+
+// function addEventListeners() {
+//   logToList("Adding event listeners");
+//   const elemGetVersion = document.getElementById('getversion');
+//   elemGetVersion.addEventListener('onclick', (event) => { getVersion(); });
+// }
+
+// addEventListeners();
+
 if (!window.indexedDB) {
 	logToList("IndexedDB is not supported!");
 } else {
@@ -23,10 +37,34 @@ if (!window.indexedDB) {
 
 function createDatabase() {
 	logToList("Entering create database");
-	let name = "buttonDB";
-	let version = 1;
+	let name = DBNAME;
+  let version = 1;
+  
 	let req = window.indexedDB.open(name, version);
-	
+  
+  req.onupgradeneeded = function(event) {
+    logToList(`createDatabase(): onupgradeneeded`)
+
+    let db = event.target.result;
+
+    // create customers
+    if (!db.objectStoreNames.contains('customers')) {
+      var customerStore = db.createObjectStore("customers", { keyPath: "email_address" });
+      customerStore.createIndex('first_name', 'first_name', { unique: false });
+      customerStore.createIndex('last_name', 'last_name', { unique: false });
+    }
+
+    // create random words
+    if (!db.objectStoreNames.contains('random_words')) {
+      db.createObjectStore('random_words', { autoIncrement: 'true' })
+    }
+
+    // create files
+    if (!db.objectStoreNames.contains('files')) {
+      db.createObjectStore('files', { autoIncrement: true });
+    }
+
+  }
 	req.onerror = function(event) {
 		logToList("Entering on error");
 		logToList(`Database error: ${event.target.errorCode}`);
@@ -35,10 +73,151 @@ function createDatabase() {
 		logToList("Successfully opened database");	
 		logToList("Closing database");
 		let db = req.result;
-		
-		db.createObjectStore("customers", { keyPath: "email_address" });
 		db.close();
 	};
+}
+
+function getVersion() {
+  logToList("getVersion(): Entering function");
+  let response = null;
+
+  let request = indexedDB.open(DBNAME);
+  request.onsuccess = function(event) {
+    let db = event.target.result; 
+    logToList(`getVersion() onsuccess: Version - ${db.version}`);
+    console.log('Database object when getting db without version.');
+    
+    switch (db.version) {
+      case 1:
+        logToList('getVersion(): case 1') // empty DB
+        updateDatabaseV1toV2();
+        break;
+      case 2: 
+        logToList('getVersion(): case 2') // customers
+        updateDatabaseV2toV3();
+        break;
+      case 3:
+        logToList('getVersion(): case 3') // random name 
+        updateDatabaseV3toV4();
+        break;
+      case 4:
+        logToList('getVersion(): case 4') // image/file/blob
+        break;
+      default: // no idea how we got here!
+        logToList('getVersion(): case default')
+        logToList('getVersion(): No idea how we got here. DB version is (${db.version})');
+    }
+  }
+  request.onerror = function(event) { 
+    logToList(`getVersion(): onerror ${event.target.error}`)
+  };
+  request.onupgradeneeded = function(event) {
+    logToList(`getVersion() onupgradeneeded`);
+  };
+  request.oncomplete = function(event) {
+    logToList(`getVersion(): oncomplete`);
+  };
+  request.onblocked = function(event) {
+    logToList(`getVersion(): request.onblocked`);
+  };
+}
+
+function readEntries() {
+  logToList(`readEntries():`);
+  let request = indexedDB.open(DBNAME);
+  request.onsuccess = function(event) {
+    let db = event.target.result; 
+    switch (db.version) {
+      case 1:
+        logToList('readEntries(): case 1') // empty DB
+        readEntriesV1();
+        break;
+      case 2: 
+        logToList('readEntries(): case 2') // customers
+        readEntriesV2();
+        break;
+      case 3:
+        logToList('readEntries(): case 3') // random name 
+        readEntriesV3();
+        break;
+      case 4:
+        logToList('readEntries(): case 4') // image/file/blob
+        break;
+      default: // no idea how we got here!
+        logToList('readEntries(): case default')
+        logToList('readEntries(): No idea how we got here. DB version is (${db.version})');
+    }
+  }
+  request.onerror = function(event) { 
+    logToList(`readEntries(): onerror ${event.target.error}`)
+  };
+  request.onupgradeneeded = function(event) {
+    logToList(`readEntries() onupgradeneeded`);
+  };
+  request.oncomplete = function(event) {
+    logToList(`readEntries(): oncomplete`);
+  };
+  request.onblocked = function(event) {
+    logToList(`readEntries(): request.onblocked`);
+  };
+}
+
+
+
+function updateDatabaseV1toV2() {
+  logToList('updateDatabaseV1toV2():');
+  let request = indexedDB.open(DBNAME,2);
+  request.onupgradeneeded = function(event) {
+    logToList('updateDatabaseV1toV2(): Upgrading to v2...');
+  };
+  request.onerror = function(event) { logToList(`updateDatabaseV1toV2(): Error (${event.target.errorCode})`); };
+  request.onsuccess = function(event) { 
+    // add customers
+    logToList(`updateDatabaseV1toV2(): onsuccess`);
+    let db = event.target.result;
+    db.close(); 
+  };
+}
+
+function updateDatabaseV2toV3() {
+  logToList('updateDatabaseV2toV3():');  
+  let request = indexedDB.open(DBNAME,3);
+  request.onupgradeneeded = function(event) {
+    logToList('updateDatabaseV2toV3(): Upgrading to v3...');
+  };
+  request.onerror = function(event) { logToList(`updateDatabaseV2toV3(): Error (${event.target.errorCode})`); };
+  request.onsuccess = function(event) { 
+    // add random names
+    logToList(`updateDatabaseV2toV3(): onsuccess - how did we get here!`); 
+    let db = event.target.result;
+    db.close(); 
+  };
+}
+function updateDatabaseV3toV4() {
+  // add files
+  logToList('updateDatabaseV3toV4():');  
+  let request = indexedDB.open(DBNAME,4);
+  request.onupgradeneeded = function(event) {
+    logToList('updateDatabaseV3toV4(): Upgrading to v4...');
+  };
+  request.onerror = function(event) { logToList(`updateDatabaseV3toV4(): Error (${event.target.errorCode})`); };
+  request.onsuccess = function(event) { 
+    logToList(`updateDatabaseV3toV4(): onsuccess - how did we get here!`); 
+    let db = event.target.result;
+    db.close(); 
+  };
+}
+
+function readEntriesV1() {
+  logToList("readEntriesV1():")
+}
+
+function readEntriesV2() {
+  logToList("readEntriesV2():")
+}
+
+function readEntriesV3() {
+  logToList("readEntriesV3():")
 }
 
 function updateDatabase() {
@@ -61,19 +240,22 @@ function updateDatabase() {
 }
 
 function deleteDatabase() {
-	logToList("Entering delete database");
-	let name = "buttonDB";
-	
-	let req = indexedDB.deleteDatabase(name);
-	req.onsuccess = function () {
-		logToList("Database deleted successfully");	
-	}
-	req.onerror = function() {
-		logToList("Unable to delete database");	
-	}
-	req.onblocked = function() {
-		logToList("Unable to delete database due to the operation being blocked");	
-	}
+  logToList("Entering delete database");
+  ['myDB', 'buttonDB', DBNAME].forEach(element => {
+    let name = element;
+    let req = indexedDB.deleteDatabase(element);
+    req.onsuccess = function () {
+      logToList("Database deleted successfully " + element);	
+    }
+    req.onerror = function() {
+      logToList("Unable to delete database " + element);	
+    }
+    req.onblocked = function() {
+      logToList("Unable to delete database due to the operation being blocked " + element);	
+    }
+  });
+
+  
 }
 
 function listDatabases() {
