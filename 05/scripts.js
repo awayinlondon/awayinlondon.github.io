@@ -1,33 +1,25 @@
 "use strict";
 
 const DBNAME = 'test_db';
+const DBVERSION = 1;
 
 
-console.log("Entering, and exiting!, a template scripts.js file");
-
-
+document.getElementById('fileSelector').addEventListener('change', handleFileSelection, false); // Add an onchange event listener for the <input id="fileSelector"> element.
 
 function createList() {
-    var element = document.getElementById('textbox');
-    element.innerHTML = '<ul id=\'list\'><li>entering addList...</li></ul>';
+  var element = document.getElementById('textbox');
+  element.innerHTML = '<ul id=\'list\'><li>entering addList...</li></ul>';
 }
 
 function logToList(text) {
-    console.log(text);
-    let element = document.getElementById('list');
-    element.innerHTML += `<li>${text}...</li>`;
+  console.log(text);
+  let element = document.getElementById('list');
+  element.innerHTML += `<li>${text}...</li>`;
 }
 
+
 createList();
-
-
-// function addEventListeners() {
-//   logToList("Adding event listeners");
-//   const elemGetVersion = document.getElementById('getversion');
-//   elemGetVersion.addEventListener('onclick', (event) => { getVersion(); });
-// }
-
-// addEventListeners();
+logToList("Entering, and exiting!, a template scripts.js file");
 
 if (!window.indexedDB) {
 	logToList("IndexedDB is not supported!");
@@ -77,168 +69,6 @@ function createDatabase() {
 	};
 }
 
-function getVersion() {
-  logToList("getVersion(): Entering function");
-  let response = null;
-
-  let request = indexedDB.open(DBNAME);
-  request.onsuccess = function(event) {
-    let db = event.target.result; 
-    logToList(`getVersion() onsuccess: Version - ${db.version}`);
-    console.log('Database object when getting db without version.');
-    
-    switch (db.version) {
-      case 1:
-        logToList('getVersion(): case 1') // empty DB
-        updateDatabaseV1toV2();
-        break;
-      case 2: 
-        logToList('getVersion(): case 2') // customers
-        updateDatabaseV2toV3();
-        break;
-      case 3:
-        logToList('getVersion(): case 3') // random name 
-        updateDatabaseV3toV4();
-        break;
-      case 4:
-        logToList('getVersion(): case 4') // image/file/blob
-        break;
-      default: // no idea how we got here!
-        logToList('getVersion(): case default')
-        logToList('getVersion(): No idea how we got here. DB version is (${db.version})');
-    }
-  }
-  request.onerror = function(event) { 
-    logToList(`getVersion(): onerror ${event.target.error}`)
-  };
-  request.onupgradeneeded = function(event) {
-    logToList(`getVersion() onupgradeneeded`);
-  };
-  request.oncomplete = function(event) {
-    logToList(`getVersion(): oncomplete`);
-  };
-  request.onblocked = function(event) {
-    logToList(`getVersion(): request.onblocked`);
-  };
-}
-
-function readEntries() {
-  logToList(`readEntries():`);
-  let request = indexedDB.open(DBNAME);
-  request.onsuccess = function(event) {
-    let db = event.target.result; 
-    switch (db.version) {
-      case 1:
-        logToList('readEntries(): case 1') // empty DB
-        readEntriesV1();
-        break;
-      case 2: 
-        logToList('readEntries(): case 2') // customers
-        readEntriesV2();
-        break;
-      case 3:
-        logToList('readEntries(): case 3') // random name 
-        readEntriesV3();
-        break;
-      case 4:
-        logToList('readEntries(): case 4') // image/file/blob
-        break;
-      default: // no idea how we got here!
-        logToList('readEntries(): case default')
-        logToList('readEntries(): No idea how we got here. DB version is (${db.version})');
-    }
-  }
-  request.onerror = function(event) { 
-    logToList(`readEntries(): onerror ${event.target.error}`)
-  };
-  request.onupgradeneeded = function(event) {
-    logToList(`readEntries() onupgradeneeded`);
-  };
-  request.oncomplete = function(event) {
-    logToList(`readEntries(): oncomplete`);
-  };
-  request.onblocked = function(event) {
-    logToList(`readEntries(): request.onblocked`);
-  };
-}
-
-
-
-function updateDatabaseV1toV2() {
-  logToList('updateDatabaseV1toV2():');
-  let request = indexedDB.open(DBNAME,2);
-  request.onupgradeneeded = function(event) {
-    logToList('updateDatabaseV1toV2(): Upgrading to v2...');
-  };
-  request.onerror = function(event) { logToList(`updateDatabaseV1toV2(): Error (${event.target.errorCode})`); };
-  request.onsuccess = function(event) { 
-    // add customers
-    logToList(`updateDatabaseV1toV2(): onsuccess`);
-    let db = event.target.result;
-    db.close(); 
-  };
-}
-
-function updateDatabaseV2toV3() {
-  logToList('updateDatabaseV2toV3():');  
-  let request = indexedDB.open(DBNAME,3);
-  request.onupgradeneeded = function(event) {
-    logToList('updateDatabaseV2toV3(): Upgrading to v3...');
-  };
-  request.onerror = function(event) { logToList(`updateDatabaseV2toV3(): Error (${event.target.errorCode})`); };
-  request.onsuccess = function(event) { 
-    // add random names
-    logToList(`updateDatabaseV2toV3(): onsuccess - how did we get here!`); 
-    let db = event.target.result;
-    db.close(); 
-  };
-}
-function updateDatabaseV3toV4() {
-  // add files
-  logToList('updateDatabaseV3toV4():');  
-  let request = indexedDB.open(DBNAME,4);
-  request.onupgradeneeded = function(event) {
-    logToList('updateDatabaseV3toV4(): Upgrading to v4...');
-  };
-  request.onerror = function(event) { logToList(`updateDatabaseV3toV4(): Error (${event.target.errorCode})`); };
-  request.onsuccess = function(event) { 
-    logToList(`updateDatabaseV3toV4(): onsuccess - how did we get here!`); 
-    let db = event.target.result;
-    db.close(); 
-  };
-}
-
-function readEntriesV1() {
-  logToList("readEntriesV1():")
-}
-
-function readEntriesV2() {
-  logToList("readEntriesV2():")
-}
-
-function readEntriesV3() {
-  logToList("readEntriesV3():")
-}
-
-function updateDatabase() {
-	logToList("Entering create database");
-	let name = "buttonDB";
-	let version = 2;
-	let req = window.indexedDB.open(name, version);
-	
-	req.onerror = function(event) {
-		logToList("Entering on error");
-		logToList(`Database error: ${event.target.errorCode}`);
-	};
-	req.onsuccess = function(event) {
-		logToList("Successfully opened database");	
-		logToList("Closing database");
-		let db = req.result;
-		db.createObjectStore("name", { autoIncrement: true });
-		db.close();
-	};
-}
-
 function deleteDatabase() {
   logToList("Entering delete database");
   ['myDB', 'buttonDB', DBNAME].forEach(element => {
@@ -254,20 +84,121 @@ function deleteDatabase() {
       logToList("Unable to delete database due to the operation being blocked " + element);	
     }
   });
+}
 
+// -------------------------------
+// promise wrapper for indexeddb from the book 'progressive web apps'
+var openDatabase = function(dbName, dbVersion) {
+  return new Promise(function (resolve, reject) {
+    if (!window.indexedDB) {
+      reject("IndexedDB not supported");
+    }
+
+    var request = window.indexedDB.open(dbName, dbVersion);
+
+    request.onerror = function(event) {
+      reject("Database error: " + event.target.error);
+    };
+
+    request.onupgradeneeded = function(event) {
+      // Upgrade code
+    };
+
+    request.onsuccess = function(event) {
+      resolve(event.target.result);
+    };
+  });
+};
+
+var openObjectStore = function(db, storeName, transactionMode) {
+  return new Promise(function (resolve, reject) {
+    var objectStore = db
+      .transaction(storeName, transactionMode)
+      .objectStore(storeName);
+    resolve(objectStore);
+  });
+};
+
+var addObject = function(objectStore, object) {
+  return new Promise(function (resolve, reject) {
+    var request = objectStore.add(object);
+    request.onsuccess = resolve;
+  });
+};
+// end of promise wrapper for indexeddb from the book 'progressive web apps'
+// -------------------------------
+
+
+function addEntries() {
+  // add customers
+  openDatabase(DBNAME, DBVERSION).then(function(db) {
+    return openObjectStore(db, 'customers', "readwrite");
+  }).then(function(objectStore) {
+    return addObject(objectStore, {email_address: 'awayinlondon@gmail.com', first_name: 'Away', last_name: 'London' });
+  }).then(function() {
+    logToList("Object added");
+  }).catch(function(errorMessage) {
+    logToList("Database error: ", errorMessage);
+  });
+
+  // add random words
+  openDatabase(DBNAME, DBVERSION).then(function(db) {
+    return openObjectStore(db, 'random_words', "readwrite");
+  }).then(function(objectStore) {
+    return addObject(objectStore, generateName());
+  }).then(function() {
+    logToList("Object added");
+  }).catch(function(errorMessage) {
+    logToList("Database error: ", errorMessage);
+  });
+}
+
+function readEntries() {
+  let request = indexedDB.open(DBNAME, DBVERSION);
+
+  request.onsuccess = function(event) {
+    var db = event.target.result;
+    
+    // read customers
+    db
+      .transaction("customers")
+      .objectStore("customers")
+      .getAll()
+      .onsuccess = function(event) {
+        var customers = event.target.result;
+        customers.forEach((customer, index) => {
+          logToList(`readEntries(): Customer ${index + 1} - ${customer.first_name} ${customer.last_name} (${customer.email_address})`)
+        });
+      }
+
+    // read random words
+    db
+    .transaction('random_words')
+    .objectStore('random_words')
+    .getAll()
+    .onsuccess = function(event) {
+      var random_words = event.target.result;
+      random_words.forEach((random_word, index) => {
+        logToList(`readEntries(): ${random_word}`)
+      });
+    }
+
+    // read files
+    db
+    .transaction('files')
+    .objectStore('files')
+    .getAll()
+    .onsuccess = function(event) {
+      var files = event.target.result;
+      files.forEach((file, index) => {
+        logToList(`readEntries(): ${file.name} (${file.size /1024} kilobytes)`)
+      });
+    }
+
+  };
   
 }
 
-function listDatabases() {
-	logToList("Entering list databases");
-	logToList("There does not appear to be a mechanism to list databases that exist");
-	indexedDB.databases().then(r => {
-		console.log(r);
-		r.forEach(function(element) {
-			logToList(`This may work in Chrome?: ${element.name}`);
-		});
-	});
-}
 
 function add() {
 	logToList("Entering add");
@@ -295,75 +226,39 @@ function add() {
 	}
 };
 
-// Let us open our database
-logToList("creating/opening database");
-var dbName = 'myDB';
-var version = 2;
-var request = window.indexedDB.open(dbName, version);
+function handleFileSelection(evt) {
+  console.log("handleFileSelection()");
 
-var db;
-request.onerror = function(event) {
-    // Generic error handler for all errors targeted at this database's requests!
-    logToList("Database error: " + event.target.errorCode);
-};
-request.onsuccess = function(event) {
-    logToList("running onsuccess function")
-    db = event.target.result;
-};
+  var files = evt.target.files; // The files selected by the user (as a FileList object).
+  if (!files) {
+    logToList("At least one selected file is invalid - do not select any folders. Please reselect and try again.");
+    return;
+  }
 
-// request.onupgradeneeded = function(event) {
-//     logToList("running onupgradeneeded function")
-//     var db = event.target.result;
-  
-//     // the ObjectStore is just like a table in SQL type database
-//     // we can data as the object store property
-//     var objectStore = db.createObjectStore('developers');
-//     var objectStore = db.createObjectStore('designers');
-//   };
+  // refer to the following page for info re: iterating through a FileList object (doesn't support forEach)
+  // https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist 
+  Array.from(files).forEach(file => {
+    // add files
+    console.log('adding file');
+    console.log(file);
 
-  // This is what our customer data looks like.
-const customerData = [
-    { ssn: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com" },
-    { ssn: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org" }
-];
+    let request = indexedDB.open(DBNAME, DBVERSION);
+    request.onsuccess = function(event) {
+      let db = event.target.result;
+      let transaction = db.transaction('files', 'readwrite');
+      transaction.onerror = function(event) {
+        console.log("Error: ", event.target.error);
+      };
+      var store = transaction.objectStore("files");
+      store.add(file);
+    }
 
-request.onupgradeneeded = function(event) {
-    logToList('running onupgradeneeded function');
-    var db = event.target.result;
-  
-      // This is what our customer data looks like.
-      const customerData = [
-        { ssn: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com" },
-        { ssn: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org" }
-    ];
+  });
+
+}
 
 
-    // Create an objectStore to hold information about our customers. We're
-    // going to use "ssn" as our key path because it's guaranteed to be
-    // unique - or at least that's what I was told during the kickoff meeting.
-    logToList('creating customers objectstore')
-    var objectStore = db.createObjectStore("customers", { keyPath: "ssn" });
-  
-    // Create an index to search customers by name. We may have duplicates
-    // so we can't use a unique index.
-    objectStore.createIndex("name", "name", { unique: false });
-  
-    // Create an index to search customers by email. We want to ensure that
-    // no two customers have the same email, so use a unique index.
-    objectStore.createIndex("email", "email", { unique: true });
-  
-    // Use transaction oncomplete to make sure the objectStore creation is 
-    // finished before adding data into it.
-    objectStore.transaction.oncomplete = function(event) {
-        logToList('objectstore transaction oncomplete')
-      // Store values in the newly created objectStore.
-      var customerObjectStore = db.transaction("customers", "readwrite").objectStore("customers");
-      customerData.forEach(function(customer) {
-        customerObjectStore.add(customer);
-      });
-    };
 
-  };
 
   /*
 (c) by Thomas Konings
@@ -388,14 +283,7 @@ function generateName(){
 
 }
 
-logToList(`Random name: ${generateName()}`);
 
-function read() {
-	logToList('entering read function');
-}
-function readAll() {
-	logToList('entering readAll function');	
-}
 	
 
 // inspiration https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
