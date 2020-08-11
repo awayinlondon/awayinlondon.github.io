@@ -2,14 +2,15 @@
 /* Simple dashboard grid CSS */
 
 /* Assign grid instructions to our parent grid container */
+/* Make our dashboard responsive in a mobile-first format */
 .grid-container {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 50px 1fr 50px;
     grid-template-areas:
-      "sidenav header"
-      "sidenav main"
-      "sidenav footer";
+      "header"
+      "main"
+      "footer";
     height: 100vh;
   }
   
@@ -28,10 +29,9 @@
   }
   
   .sidenav {
+    display: none;
     grid-area: sidenav;
     background-color: #394263;
-    display: flex;
-    flex-direction: column;
   }
 
   .sidenav__list {
@@ -87,7 +87,7 @@
   }
 
   .main-cards {
-    column-count: 2;
+    column-count: 1;
     column-gap: 20px;
     margin: 20px;
   }
@@ -116,5 +116,29 @@
   .card:nth-child(3) {
     height: 265px;
   }
+
+/* non-mobile styles, 750px breakpoint */
+@media only screen and (min-width: 46.875em) {
+    /* show the sidenav */
+    .grid-container {
+        grid-template-columns: 240px 1 fr; /* show the side nav for non-mobile screens */
+        grid-template-areas:
+            "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+    }
+    
+    .sidenav {
+        display:flex;
+        flex-direction: column;
+    }
+}
+
+/* medium-sized screen breakpoint (tablet, 1050px) */
+@media only screen and (min-width: 65.625em) {
+    .main-cards {
+        column-count: 2;   
+    }
+}
 
 
