@@ -1,0 +1,68 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas:
+        'header'
+        'main'
+        'footer';
+    height: 100vh;
+}
+
+.header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background-color: #648ca6;
+}
+
+.sidenav {
+    grid-area: sidenav;
+     display: flex; 
+     flex-direction: column; 
+    height: 100%; 
+    width: 240px;
+    position: fixed;
+    overflow-y: auto;
+    transform: translateX(-245px,0,0); /* added in additional y and z dimensions to resolve issue with iOS */
+    transition: all .6s ease-in-out;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    z-index: 2; /* Needs to sit above the hamburger menu icon */
+    background-color: #394263;
+}
+
+.main {
+    grid-area: main;
+    background-color: #8fd4d9;
+}
+
+.footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background-color: #648ca6;
+}
+
+/* Non-mobile styles, 750px breakpoint */
+@media only screen and (min-width: 46.875em) {
+  /* Show the sidenav */
+    .grid-container {
+        grid-template-columns: 240px 1fr;
+        grid-template-areas:
+            "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+}
+
+.header__search {
+    margin-left: 0;
+}
+
+.sidenav {
+    position: relative;
+    transform: translateX(0);
+}
