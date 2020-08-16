@@ -198,6 +198,17 @@ body {
   }
 }
 
+/* 414px is the width of the iPhone XR - portrait */
+@media screen and (max-width: 414px) {
+  .sidenav {
+    display: none;
+  }
+}
+@media screen and (min-width: 414px) {
+  .sidenav {
+    display: flex;
+  }
+}
 
 /* Non-mobile styles, 750px breakpoint */
 /*@media only screen and (min-width: 46.875em) {
