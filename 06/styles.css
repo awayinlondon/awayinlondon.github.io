@@ -172,7 +172,7 @@ body {
 }
 
 /* iPhone X */
-@media only screen and (device-width: 375px) and (-webkit-device-pixel-ratio: 3) {
+@media only screen and (device-width: 375px) {
   .sidenav {
     display: flex;
     background-color: red;
