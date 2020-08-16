@@ -171,6 +171,25 @@ body {
   }
 }
 
+/* iPhone X */
+@media only screen and (min-width: 500px) {
+  .sidenav {
+    display: flex;
+    background-color: red;
+    color: red;
+  }
+}
+
+/* not iPhone X */
+@media only screen and (min-width: 500px) {
+  .sidenav {
+    display: flex;
+    background-color: yellow;
+    color: yellow;
+  }
+}
+
+
 /* Non-mobile styles, 750px breakpoint */
 /*@media only screen and (min-width: 46.875em) {
   /* Show the sidenav */
