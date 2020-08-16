@@ -171,12 +171,21 @@ body {
   }
 }
 
-/* iPhone X */
-@media only screen and (device-width: 375px) {
+/* iPhone X - portrait */
+@media only screen and (device-width: 375px) and (orientation: portrait) {
   .sidenav {
     display: flex;
     background-color: red;
     color: red;
+  }
+}
+
+/* iPhone X - landscape */
+@media only screen and (device-width: 375px) and (orientation: landscape) {
+  .sidenav {
+    display: flex;
+    background-color: green;
+    color: green;
   }
 }
 
