@@ -50,14 +50,14 @@ body {
 .sidenav {
     grid-area: sidenav;
 /*    display: flex;*/
-    display: flex;
+    display: none;
     flex-direction: column;
     height: 100%;
     width: 240px;
     position: fixed;
     overflow-y: auto;
-    transform: translateX(-245px); 
-    -webkit-transform: translateX(-245px);
+    /* transform: translateX(-245px); 
+    -webkit-transform: translateX(-245px); */
     transition: all .6s ease-in-out;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     z-index: 2; /* Needs to sit above the hamburger menu icon */
