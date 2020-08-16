@@ -50,7 +50,7 @@ body {
 .sidenav {
     grid-area: sidenav;
 /*    display: flex;*/
-    display: none;
+    display: flex;
     flex-direction: column;
     height: 100%;
     width: 240px;
