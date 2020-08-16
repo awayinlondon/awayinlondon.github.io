@@ -190,7 +190,7 @@ body {
 }
 
 /* not iPhone X */
-@media not only screen and (device-width: 375px) {
+@media not screen and (device-width: 375px) {
   .sidenav {
     display: flex;
     background-color: yellow;
