@@ -202,11 +202,15 @@ body {
 @media screen and (max-width: 414px) {
   .sidenav {
     display: none;
+    background-color: purple;
+    color: magneta;
   }
 }
-@media screen and (min-width: 414px) {
+@media screen and (min-width: 415px) {
   .sidenav {
     display: flex;
+    color: navy;
+    background-color: pink;
   }
 }
 
