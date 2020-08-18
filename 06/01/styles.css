@@ -1,4 +1,4 @@
-/* mobile-first grid */
+/* mobile-first portrait grid */
 .grid-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -19,13 +19,17 @@ header {
     background-color: #648ca6;
 }
 
-sidenav {
-    grid-area: sidenav;
-    display: flex; 
-    flex-direction: column; 
-    height: 100%; 
-    width: 240px;
-    position: fixed;
+nav {
+    grid-area: nav;
+}
+
+aside {
+    grid-area: aside;
+    /* display: flex;  */
+    /* flex-direction: column;  */
+    /* height: 100%;  */
+    /* width: 240px; */
+    /* position: fixed; */
     /* overflow-y: auto; */
     /* transform: translateX(-245px,0,0); added in additional y and z dimensions to resolve issue with iOS */
     /* transition: all .6s ease-in-out; */
