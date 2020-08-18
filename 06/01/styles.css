@@ -2,9 +2,11 @@
 .grid-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 50px 50px 50px 1fr 50px;
     grid-template-areas:
         'header'
+        'nav'
+        'aside'
         'main'
         'footer';
     height: 100vh;
@@ -16,11 +18,12 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    background-color: #648ca6;
+    background-color: #540D6E;
 }
 
 nav {
     grid-area: nav;
+    background-color: #EE4266;
 }
 
 aside {
@@ -35,12 +38,12 @@ aside {
     /* transition: all .6s ease-in-out; */
     /* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08); */
     /* z-index: 2; Needs to sit above the hamburger menu icon */
-    background-color: #394263;
+    background-color: #3BCEAC;
 }
 
 main {
     grid-area: main;
-    background-color: #8fd4d9;
+    background-color: #FFD23F;
 }
 
 footer {
@@ -49,6 +52,6 @@ footer {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    background-color: #90a614;
+    background-color: #0EAD69;
 }
 
