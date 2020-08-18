@@ -13,15 +13,16 @@
 }
 
 /* medium (i.e. mobile landscape */
-@media only screen and (min-device-width: 375px) {
+@media only screen and (orientation: portrait) {
     .grid-container {
-        grid-template-columns: 240px 1fr;
-        grid-template-rows: 50px 50px 1fr 50px;
-        grid-template-areas: 
-            'aside header'
-            'aside nav'
-            'aside main'
-            'aside footer'
+        grid-template-columns: 1fr;
+        grid-template-rows: 50px 50px 50px 1fr 50px;
+        grid-template-areas:
+            'header'
+            'nav'
+            'aside'
+            'main'
+            'footer';
     }
 }
 
