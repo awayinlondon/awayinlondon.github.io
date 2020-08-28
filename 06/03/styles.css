@@ -71,7 +71,7 @@ aside {
 main {
     grid-area: main;
     background-color: #CAF0F8;
-    opacity: 0.7;
+    opacity: 0.85;
 }
 
 main * {
