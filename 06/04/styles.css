@@ -152,6 +152,7 @@ vertical-align: top;
 #card-image {
     width: 100%;
     height: 100%;
+    display: block; /* remove extra space below image */
     /* background: url(http://i.imgur.com/0BBsCUB.gif) no-repeat center; */
-    background-size: cover;
-}
+    
+
