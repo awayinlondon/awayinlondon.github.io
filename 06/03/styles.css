@@ -95,8 +95,8 @@ main * {
         repeating-linear-gradient(23deg, red 50px, orange 100px,
           yellow 150px, green 200px, blue 250px,
           indigo 300px, violet 350px, red 370px);
-          background-attachment: fixed;
-        }
+    background-attachment: fixed;
+}
 
 
 .main-overview {
