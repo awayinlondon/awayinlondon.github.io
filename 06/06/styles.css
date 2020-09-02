@@ -4,25 +4,23 @@
     box-sizing: border-box;
   }
 
-.main {
-    background-color: red;
-}
 
 .cards {
     display: grid;
 /*    grid-template-columns: repeat(auto-fill, minmax(375px, 1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 20px;
     padding: 20px;
-    background-color: greenyellow;
 } 
 
+.card {
+    background-color: yellow;
+}
 
 .card {
     /* card look & feel */
-    background-color: white; /* #00B4D8; */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    
+    background-color: white; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);      
     /* card square */
     position: relative;
     padding-bottom: 100%; /* allows place stuff inside the container without affecting the padding */
@@ -41,7 +39,7 @@
 
 /* background, transparency etc */
 
-.cards {
+html {
     background:
         repeating-linear-gradient(190deg, rgba(255, 0, 0, 0.5) 40px,
           rgba(255, 153, 0, 0.5) 80px, rgba(255, 255, 0, 0.5) 120px,
@@ -58,6 +56,11 @@
           indigo 300px, violet 350px, red 370px);
 }
 
-.cards {
-    color: white;
+.main {
+    background-color: rgb(255,255,255,.6);
 }
+
+.card {
+    background-color: rgb(255,255,255,.8);
+}
+
