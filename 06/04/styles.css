@@ -101,11 +101,20 @@ main * {
 
 .main-overview {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
     grid-gap: 20px;
     margin: 20px;
     opacity: 1.0;
 }
+
+
+/*
+    X:      375px
+    XR:     414px
+    XS:     375px
+    XS Max: 414px
+*/ 
+
 
 .main-overview-card {
     display: flex;
@@ -135,13 +144,16 @@ footer {
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-  grid-gap: 5px;
+    display: grid;
+/*  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));*/
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr)); 
+    grid-gap: 5px;
 }
   
-.container div {
-  background-color: red;
+.container div { /* card */
+    background-color: red;
+    padding: 20px;
+
   
 }
   
@@ -149,7 +161,7 @@ footer {
     content: "";
     padding-bottom: 100%; 
     display: inline-block;
-vertical-align: top;
+    vertical-align: top;
 }
 
 #card-image {
@@ -170,5 +182,9 @@ main-overview-card-image {
   width: 100%;
   height: 100%;
 }
-    
+
+.card-igan {
+    color: aqua;
+    background-color: aqua;
+}
 
