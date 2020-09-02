@@ -186,5 +186,6 @@ main-overview-card-image {
 .card-igan {
     color: aqua;
     background-color: aqua;
+    opacity: 1.0;
 }
 
