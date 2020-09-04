@@ -17,6 +17,7 @@ fileSelector.addEventListener('change', (event) => {
     console.log(fileList);
     let sFilename = fileList[0].name;
     updateText(elementId, sFilename)
+    handleFileSelection(event);
 
 });
 
@@ -67,3 +68,168 @@ function uploadFile(file) {
 }
 
 
+// Database
+function logToList(text) {
+    updateText('file-list', text);
+}
+
+let DBNAME = 'awaydb'
+let DBVERSION = 1;
+
+function checkIndexedDBSupport() {
+    if (!window.indexedDB) {
+	    logToList("IndexedDB is not supported!");
+    } else {
+        logToList("IndexedDB is supported")
+    }
+}
+checkIndexedDBSupport();
+
+function createDatabase() {
+	logToList("Entering create database");
+	let name = DBNAME;
+    let version = 1;
+  
+	let req = window.indexedDB.open(name, version);
+  
+  req.onupgradeneeded = function(event) {
+    logToList(`createDatabase(): onupgradeneeded`)
+
+    let db = event.target.result;
+
+    // create files
+    if (!db.objectStoreNames.contains('files')) {
+      db.createObjectStore('files', { autoIncrement: true });
+    }
+  }
+	req.onerror = function(event) {
+		logToList("Entering on error");
+		logToList(`Database error: ${event.target.errorCode}`);
+	};
+	req.onsuccess = function(event) {
+		logToList("Successfully opened database");	
+		logToList("Closing database");
+		let db = req.result;
+		db.close();
+	};
+}
+
+function deleteDatabase() {
+  logToList("Entering delete database");
+  ['myDB', 'buttonDB', DBNAME].forEach(element => {
+    let name = element;
+    let req = indexedDB.deleteDatabase(element);
+    req.onsuccess = function () {
+      logToList("Database deleted successfully " + element);	
+    }
+    req.onerror = function() {
+      logToList("Unable to delete database " + element);	
+    }
+    req.onblocked = function() {
+      logToList("Unable to delete database due to the operation being blocked " + element);	
+    }
+  });
+}
+
+// -------------------------------
+// promise wrapper for indexeddb from the book 'progressive web apps'
+var openDatabase = function(dbName, dbVersion) {
+  return new Promise(function (resolve, reject) {
+    if (!window.indexedDB) {
+      reject("IndexedDB not supported");
+    }
+
+    var request = window.indexedDB.open(dbName, dbVersion);
+
+    request.onerror = function(event) {
+      reject("Database error: " + event.target.error);
+    };
+
+    request.onupgradeneeded = function(event) {
+      // Upgrade code
+    };
+
+    request.onsuccess = function(event) {
+      resolve(event.target.result);
+    };
+  });
+};
+
+var openObjectStore = function(db, storeName, transactionMode) {
+  return new Promise(function (resolve, reject) {
+    var objectStore = db
+      .transaction(storeName, transactionMode)
+      .objectStore(storeName);
+    resolve(objectStore);
+  });
+};
+
+var addObject = function(objectStore, object) {
+  return new Promise(function (resolve, reject) {
+    var request = objectStore.add(object);
+    request.onsuccess = resolve;
+  });
+};
+// end of promise wrapper for indexeddb from the book 'progressive web apps'
+// -------------------------------
+
+
+function addEntries() {
+
+}
+
+function readEntries() {
+  let request = indexedDB.open(DBNAME, DBVERSION);
+
+  request.onsuccess = function(event) {
+    var db = event.target.result;
+    
+    // read files
+    db
+    .transaction('files')
+    .objectStore('files')
+    .getAll()
+    .onsuccess = function(event) {
+      var files = event.target.result;
+      files.forEach((file, index) => {
+        logToList(`readEntries(): ${file.name} (${file.size /1024} kilobytes)`)
+      });
+    }
+
+  };
+  
+}
+
+function handleFileSelection(evt) {
+    console.log("handleFileSelection()");
+  
+    var files = evt.target.files; // The files selected by the user (as a FileList object).
+    if (!files) {
+      logToList("At least one selected file is invalid - do not select any folders. Please reselect and try again.");
+      return;
+    }
+  
+    // refer to the following page for info re: iterating through a FileList object (doesn't support forEach)
+    // https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist 
+    Array.from(files).forEach(file => {
+      // add files
+      console.log('adding file');
+      console.log(file);
+  
+      let request = indexedDB.open(DBNAME, DBVERSION);
+      request.onsuccess = function(event) {
+        let db = event.target.result;
+        let transaction = db.transaction('files', 'readwrite');
+        transaction.onerror = function(event) {
+          console.log("Error: ", event.target.error);
+        };
+        var store = transaction.objectStore("files");
+        store.add(file);
+      }
+  
+    });
+  
+  }
+
+  createDatabase();
+  readEntries();
