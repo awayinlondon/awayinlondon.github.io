@@ -6,7 +6,7 @@ function updateText(elementId, newText) {
     var textboxElement = document.getElementById(elementId);
     var current = textboxElement.innerHTML;
     var listItem = `<li><strong>Filename: </strong>${newText}</li>`;
-    textboxElement.innerHTML = current.concat(listItem);
+    textboxElement.innerHTML = listItem.concat(current);
 }
 
 
@@ -216,6 +216,8 @@ function handleFileSelection(evt) {
       console.log('adding file');
       console.log(file);
   
+      addFileToDB(file);
+
       let request = indexedDB.open(DBNAME, DBVERSION);
       request.onsuccess = function(event) {
         let db = event.target.result;
@@ -271,3 +273,28 @@ db.friends.put({name: "Nicolas", shoeSize: 8}).then (function(){
    alert ("Ooops: " + error);
 });
 
+  const dexieDB = new Dexie('dexie-db');
+  dexieDB.version(2).stores({
+      files: '++id,filename,file'
+  });
+
+function addFileToDB(file) {
+    dexieDB.transaction('rw', dexieDB.files, function() {
+        logToList(`adding file to db: ${file.name}`);
+        dexieDB.files.add({ filename: file.name, file: file});
+    }).catch(function(err) {
+        logToList(`error adding file to DB: ${err}`);
+    });
+}
+
+async function readFilesFromDB() {
+    const databases = Dexie.getDatabaseNames();
+    logToList(databases);
+
+    var files = await dexieDB.files.toArray();
+    files.forEach(element => {
+        logToList(element.filename);
+    });   
+}
+
+readFilesFromDB();
