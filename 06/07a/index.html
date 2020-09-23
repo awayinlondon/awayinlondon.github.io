@@ -8,8 +8,16 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
-		This is the body of a template page.
-		<script src="scripts.js"></script>
+		<div id='buttons'>
+			<button onClick = "createDatabase()">Create Database</button>
+			<button onClick = "listDatabases()">List Databases</button>
+			<button onClick = "deleteDatabase()">Delete Databases</button>
+			<button onClick = "addEntries()">Add Data to Database</button>
+			<button onclick = "readEntries()">Read Data from Database</button>
+			<button onclick = "deleteEntries()">Delete Data from Database</button>
+			<input type="file" id="fileSelector" multiple size="24">Add File to Database</input>
+		</div>
+		<div id='textbox'></div>
 	</body>
 	
 </html>
