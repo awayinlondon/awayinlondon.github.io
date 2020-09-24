@@ -22,8 +22,10 @@ function createDatabase() {
     // Declare db instance
     var db = new Dexie("FilesDB");
     // Define Database Schema
-    db.version(1).stores({files: "++id,filename,file"});
-    db.version(2).stores({files: "++id,date,filename,file"});
+    //db.version(1).stores({files: "++id,date,filename,file"});
+    db.version(1).stores({files: "++id"});
+    db.version(2).stores({files: "++id, filename"});
+    db.version(3).stores({files: "++id, filename, date"});
     db.open().then(function (db) {
         log ("Found database: " + db.name);
         log ("Database version: " + db.verno);
@@ -72,11 +74,38 @@ function addEntries() {
 
 function readEntries() {
     log('entering readEntries');
+    var db = createDatabase();
+    db.files.each(function (dbEntry) {
+        log("Found: " + dbEntry.file.name + ". Size: " + dbEntry.file.size);
+    }).catch(function (error) {
+        log(`Error: ${error}`);
+    });
 }
 
 function deleteEntries() {
     log('entering deleteEntries');
     var result = Dexie.deleteDatabase('FilesDB');
     log(`Dexie delete result: ${result}`)
+}
+
+const fileSelector = document.getElementById('file-selector');
+fileSelector.addEventListener('change', (event) => {
+    log('entering file selector change event');
+    const fileList = event.target.files;
+    log(fileList);
+    uploadFiles(fileList);
+});
+
+function uploadFiles(fileList) {
+    log('entering upload files');
+    // as FileList doesn't support forEach... neat foreach trick from https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist
+    [...fileList].forEach((file) => {
+        var db = createDatabase();
+        db.files.put({
+            date: getDateTimeStamp(),
+            filename: file.name,
+            file: file
+        });
+    });
 }
 
