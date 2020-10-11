@@ -126,8 +126,8 @@
 
 /* Exclude larger cards that won't fit when the number of columns (i.e. column width) is too restrictive */
 
-@media screen and (max-width: 639px) { { 
-  .portrait-card, .landscape-card, .medium-card { display: none; }
+@media screen and (max-width: 639px) { 
+  .landscape-card, .medium-card { display: none; }
 }
 
   
