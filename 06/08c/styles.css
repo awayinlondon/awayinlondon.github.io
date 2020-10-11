@@ -102,43 +102,76 @@
   display: grid;
   grid-template-columns: repeat(1, 320px);
   grid-template-rows: repeat(99, 320px);
-  grid-auto-flow: row dense;  /* automatically shift content into any gaps! By column so lose source order */
+  grid-auto-flow: row dense; /* automatically shift content into any gaps! By column so lose source order */
   grid-gap: 20px; /* shorthand for row-gap and column-gap  */
   padding: 20px;
   /* margin: 0 auto; */
 }
 
-@media screen and (min-width:  320px) { .dashboard-grid { grid-template-columns: repeat(1, 1fr); } }
-@media screen and (min-width:  640px) { .dashboard-grid { grid-template-columns: repeat(2, 1fr); } }
-@media screen and (min-width:  920px) { .dashboard-grid { grid-template-columns: repeat(3, 1fr); } }
-@media screen and (min-width: 1280px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
-@media screen and (min-width: 1600px) { .dashboard-grid { grid-template-columns: repeat(5, 1fr); } }
-@media screen and (min-width: 1920px) { .dashboard-grid { grid-template-columns: repeat(6, 1fr); } }
-  
-
+@media screen and (min-width: 320px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media screen and (min-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (min-width: 920px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (min-width: 1600px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (min-width: 1920px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 
 /* Card Sizes */
 
-.small-card     { grid-column: span 1; grid-row: span 1; }
-.portait-card   { grid-column: span 1; grid-row: span 2; }
-.landscape-card { grid-column: span 2; grid-row: span 1; }
-.medium-card    { grid-column: span 2; grid-row: span 2; }
+.small-card {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.portait-card {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.landscape-card {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.medium-card {
+  grid-column: span 2;
+  grid-row: span 2;
+}
 
 /* Exclude larger cards that won't fit when the number of columns (i.e. column width) is too restrictive */
 
-@media screen and (max-width: 639px) { 
-  .landscape-card, .medium-card { display: none; }
+@media screen and (max-width: 639px) {
+  .landscape-card,
+  .medium-card {
+    display: none;
+  }
 }
 
-  
-  
 /* Individual Card Styling */
 
 .card {
   background-color: rgb(255, 255, 255, 0.55);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  position: relative;
-  display: inline-block;
   color: red;
   justify-content: center;
   align-items: center;
